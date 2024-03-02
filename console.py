@@ -39,6 +39,19 @@ class HBNBCommand(cmd.Cmd):
             print(cls.id)
             storage.save()
 
+    def do_show(self, args):
+        argss = args.split(' ')
+        if len(argss) < 1 or not argss[0]:
+            print('** class name missing **')
+        elif argss[0] not in HBNBCommand.myclasses:
+            print('** class doesn\'t exist **')
+        elif len(argss) < 2 or not argss[1]:
+            print('** instance id missing **')
+        elif f"{argss[0]}.{argss[1]}" not in storage.all():
+            print ('** no instance found **')
+        else:
+            print(storage.all()[f"{argss[0]}.{argss[1]}"])
+
     
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
