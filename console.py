@@ -6,11 +6,12 @@ from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
 
+
 class HBNBCommand(cmd.Cmd):
     """Class : HBNHCOMMAND"""
 
     prompt = "(hbnb) "
-    myclasses = ['BaseModel']
+    myclasses = ["BaseModel"]
 
     def do_quit(self, inp):
         """handle quit input."""
@@ -29,10 +30,11 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
+        """Creates a new instance of class"""
         if args is None or not args:
-            print('** class name missing **')
+            print("** class name missing **")
         elif args not in HBNBCommand.myclasses:
-            print('** class doesn\'t exist **')
+            print("** class doesn't exist **")
         else:
             class_name = args
             cls = globals()[class_name]()
@@ -40,50 +42,71 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_show(self, args):
-        argss = args.split(' ')
+        """Prints the string representation of an instance"""
+        argss = args.split(" ")
         if len(argss) < 1 or not argss[0]:
-            print('** class name missing **')
+            print("** class name missing **")
         elif argss[0] not in HBNBCommand.myclasses:
-            print('** class doesn\'t exist **')
+            print("** class doesn't exist **")
         elif len(argss) < 2 or not argss[1]:
-            print('** instance id missing **')
+            print("** instance id missing **")
         elif f"{argss[0]}.{argss[1]}" not in storage.all():
-            print ('** no instance found **')
+            print("** no instance found **")
         else:
             print(storage.all()[f"{argss[0]}.{argss[1]}"])
 
     def do_destroy(self, args):
-        argss = args.split(' ')
+        """Deletes an instance based on the class name and id"""
+        argss = args.split(" ")
         if len(argss) < 1 or not argss[0]:
-            print('** class name missing **')
+            print("** class name missing **")
         elif argss[0] not in HBNBCommand.myclasses:
-            print('** class doesn\'t exist **')
+            print("** class doesn't exist **")
         elif len(argss) < 2 or not argss[1]:
-            print('** instance id missing **')
+            print("** instance id missing **")
         elif f"{argss[0]}.{argss[1]}" not in storage.all():
-            print ('** no instance found **')
+            print("** no instance found **")
         else:
             del storage.all()[f"{argss[0]}.{argss[1]}"]
             storage.save()
 
     def do_all(self, args):
+        """Prints all string representation of all instances"""
         if len(args) < 1 or not args:
             lista = []
             for key, value in storage.all().items():
                 lista.append(str(value))
             print(lista)
         elif args not in HBNBCommand.myclasses:
-            print('** class doesn\'t exist **')
+            print("** class doesn't exist **")
         else:
             lista2 = []
             for key, value in storage.all().items():
-                keyy = key.split('.')
+                keyy = key.split(".")
                 if keyy[0] == args:
                     lista2.append(str(value))
             print(lista2)
-    
+
+    def do_update(self, args):
+        """Updates an instance based on the class name and id"""
+        argss = args.split(" ")
+        if len(argss) < 1 or not argss[0]:
+            print("** class name missing **")
+        elif argss[0] not in HBNBCommand.myclasses:
+            print("** class doesn't exist **")
+        elif len(argss) < 2 or not argss[1]:
+            print("** instance id missing **")
+        elif f"{argss[0]}.{argss[1]}" not in storage.all():
+            print("** no instance found **")
+        elif len(argss) < 3 or not argss[2]:
+            print("** attribute name missing **")
+        elif len(argss) < 4 or not argss[3]:
+            print("** value missing **")
+        else:
+            strg = storage.all()[f"{argss[0]}.{argss[1]}"]
+            strg.__dict__[argss[2]] = argss[3]
+            storage.save()
 
 
-    
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
