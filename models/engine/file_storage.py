@@ -70,6 +70,8 @@ class FileStorage:
         """
 
         from models.base_model import BaseModel
+        from models.user import User
+
 
         if not isfile(self.__file_path):
             return
