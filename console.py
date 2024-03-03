@@ -3,15 +3,16 @@
 """ program that contains the entry point of the command interpreter"""
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models.engine.file_storage import FileStorage
 from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
-    """Class : HBNHCOMMAND"""
+    """Class : HBNBCOMMAND"""
 
     prompt = "(hbnb) "
-    myclasses = ["BaseModel"]
+    myclasses = ["BaseModel", "User"]
 
     def do_quit(self, inp):
         """handle quit input."""
