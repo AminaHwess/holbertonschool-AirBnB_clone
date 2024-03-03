@@ -66,6 +66,22 @@ class HBNBCommand(cmd.Cmd):
             del storage.all()[f"{argss[0]}.{argss[1]}"]
             storage.save()
 
+    def do_all(self, args):
+        if len(args) < 1 or not args:
+            lista = []
+            for key, value in storage.all().items():
+                lista.append(str(value))
+            print(lista)
+        elif args not in HBNBCommand.myclasses:
+            print('** class doesn\'t exist **')
+        else:
+            lista2 = []
+            for key, value in storage.all().items():
+                keyy = key.split('.')
+                if keyy[0] in key:
+                    lista2.append(str(value))
+            print(lista2)
+
     
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
