@@ -6,13 +6,18 @@ from models.base_model import BaseModel
 from models.user import User
 from models.engine.file_storage import FileStorage
 from models import storage
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     """Class : HBNBCOMMAND"""
 
     prompt = "(hbnb) "
-    myclasses = ["BaseModel", "User"]
+    myclasses = ["BaseModel", "User", "State", "Review", "Place", "City", "Amenity"]
 
     def do_quit(self, inp):
         """handle quit input."""
