@@ -77,7 +77,6 @@ class FileStorage:
         from models.place import Place
         from models.review import Review
 
-
         if not isfile(self.__file_path):
             return
         with open(self.__file_path, "r") as file:
